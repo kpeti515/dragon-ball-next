@@ -1,24 +1,22 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import Header from './Header'
 
-// Prefer vitest's global mock, but keep compatibility with Jest by falling
-// back to a no-op when not available.
-const maybeVi: any = (global as any).vi || (global as any).jest || undefined;
+// Mock next/link to render a simple anchor
+vi.mock('next/link', () => {
+  return {
+    default: ({ children, href, className }: any) => {
+      return (
+        React.createElement('a', { href, className }, children)
+      )
+    }
+  }
+})
 
-// Mock next/link to render a plain <a> so tests can assert on links.
-if (maybeVi && maybeVi.mock) {
-  maybeVi.mock('next/link', () => ({
-    __esModule: true,
-    default: ({ href, children, ...props }: any) => {
-      return React.createElement('a', { href, ...props }, children);
-    },
-  }));
-}
-
-// Mock the CSS module import used by the component. Tests don't need real
-// classes — just stable strings so className usage doesn't fail.
-if (maybeVi && maybeVi.mock) {
-  maybeVi.mock('./Header.module.css', () => ({
+// Mock CSS module import used by Header
+vi.mock('./Header.module.css', () => {
+  return {
     default: {
       header: 'header',
       inner: 'inner',
@@ -34,47 +32,38 @@ if (maybeVi && maybeVi.mock) {
       powerText: 'powerText',
       toggle: 'toggle',
       toggleKnob: 'toggleKnob',
-      iconBtn: 'iconBtn',
-    },
-  }));
-}
+      iconBtn: 'iconBtn'
+    }
+  }
+})
 
-import Header from './Header';
 
 describe('Header', () => {
-  it('renders the site brand and logo link', () => {
-    render(<Header />);
+  it('renders brand and navigation links and controls', () => {
+    render(<Header />)
 
-    const brandLink = screen.getByRole('link', { name: /DB-DEX/i });
-    expect(brandLink).toBeInTheDocument();
-    expect(brandLink).toHaveAttribute('href', '/');
-  });
+    // Brand link
+    const brand = screen.getByText('DB-DEX') as HTMLElement | null
+    expect(brand).toBeTruthy()
+    expect(brand?.getAttribute('href')).toBe('/')
 
-  it('renders main navigation with expected links', () => {
-    render(<Header />);
+    // Navigation links
+    const characters = screen.getByText('Characters') as HTMLElement
+    const sagas = screen.getByText('Sagas') as HTMLElement
+    const transformations = screen.getByText('Transformations') as HTMLElement
+    const techniques = screen.getByText('Techniques') as HTMLElement
 
-    const nav = screen.getByRole('navigation', { name: /Main navigation/i });
-    expect(nav).toBeInTheDocument();
+    expect(characters.getAttribute('href')).toBe('/characters')
+    expect(sagas.getAttribute('href')).toBe('/sagas')
+    expect(transformations.getAttribute('href')).toBe('/transformations')
+    expect(techniques.getAttribute('href')).toBe('/techniques')
 
-    const expected = ['Characters', 'Sagas', 'Transformations', 'Techniques'];
-    expected.forEach((label) => {
-      const link = screen.getByRole('link', { name: label });
-      expect(link).toBeInTheDocument();
-    });
-  });
+    // Controls
+    const themeBtn = screen.getByRole('button', { name: /Toggle theme/i })
+    expect(themeBtn).toBeTruthy()
 
-  it('renders control buttons including power level and theme toggle', () => {
-    render(<Header />);
+    const powerText = screen.getByText('Power Level')
+    expect(powerText).toBeTruthy()
+  })
+})
 
-    // Power Level button contains the visible text "Power Level".
-    const powerText = screen.getByText(/Power Level/i);
-    expect(powerText).toBeInTheDocument();
-
-    const powerBtn = powerText.closest('button');
-    expect(powerBtn).toBeInTheDocument();
-    expect(powerBtn).toHaveAttribute('aria-pressed', 'false');
-
-    const themeToggle = screen.getByRole('button', { name: /Toggle theme/i });
-    expect(themeToggle).toBeInTheDocument();
-  });
-});

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import styles from '../../page.module.css'
 
 async function fetchCharacter(id: string) {
   const url = `https://dragonball-api.com/api/characters/${id}`
