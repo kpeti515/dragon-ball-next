@@ -1,0 +1,13 @@
+:root{
+  --bg:#071028;
+  --card:#0d2236;
+  --accent:#17a2ff;
+  --glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box}
+html,body,#__next{height:100%;margin:0}
+body{background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial}
+
+/* Starry background: lightweight pure-CSS stars using radial-gradients */
+/* Starry background removed from globals.css — moved to layout.module.css */
+

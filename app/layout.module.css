@@ -1,0 +1,36 @@
+.appRoot{
+  --bg: #071028;
+  --card: #0d2236;
+  --accent: #17a2ff;
+  --glass: rgba(255,255,255,0.04);
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.5rem;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+  color: #fff;
+}
+.appRoot *{ box-sizing: inherit; }
+/* Denser animated starfield implemented as a positioned element. */
+.stars{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+}
+
+.starCanvas{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Previous CSS gradient-based star layers removed — canvas-based Starfield used instead */
+
+/* ensure app content sits above stars */
+#__next{position:relative;z-index:1}

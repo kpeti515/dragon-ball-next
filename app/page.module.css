@@ -1,0 +1,20 @@
+.container{
+  max-width:1200px;margin:0 auto;padding:24px;
+}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;font-weight:700}
+.nav{display:flex;gap:16px;color:#cfe7ff}
+.hero{display:flex;gap:24px;align-items:center;padding:48px 0}
+.heroText{flex:1;color:#fff}
+.eyebrow{color:var(--accent);font-weight:700}
+.title{font-size:48px;margin:12px 0}
+.cta{background:linear-gradient(90deg,#ff9a3c,#ff5c7a);padding:12px 20px;border-radius:999px;color:#fff;display:inline-block}
+.heroImage{width:360px;height:480px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.stats{display:flex;gap:12px;background:var(--glass);padding:12px;border-radius:8px;color:#dff1ff;margin:16px 0}
+.stat{padding:8px 12px;background:transparent;border-radius:6px}
+.roster{margin-top:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;list-style:none;padding:0;margin:0}
+
+/* Remove default list markers for roster list */
+.grid li{list-style:none}
+.tag{display:inline-block;padding:4px 8px;background:rgba(255,255,255,0.04);border-radius:999px;font-size:12px;margin-top:6px}

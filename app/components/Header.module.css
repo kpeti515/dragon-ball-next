@@ -1,0 +1,215 @@
+.header {
+	padding: 18px 0;
+	background: transparent
+}
+
+.inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 12px 18px;
+	background: linear-gradient(180deg, rgba(11, 53, 80, 0.85), rgba(10, 42, 59, 0.75));
+	border-radius: 22px;
+	display: flex;
+	align-items: center;
+	gap: 28px;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	box-shadow: 0 8px 24px rgba(2, 10, 18, 0.6)
+}
+
+/* make the pill a bit taller and add glass effect */
+.inner {
+	padding-top: 14px;
+	padding-bottom: 14px;
+	backdrop-filter: blur(6px);
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: #fff;
+	font-weight: 800
+}
+
+.logoBadge {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #7b1f00;
+	font-weight: 900;
+	font-size: 22px;
+	box-shadow: 0 6px 18px rgba(255, 120, 20, 0.28), inset 0 -6px 12px rgba(0, 0, 0, 0.15);
+	border: 2px solid rgba(255, 255, 255, 0.18);
+	position: relative;
+	overflow: visible;
+	background: radial-gradient(circle at 35% 25%, #fff6d8 0%, rgba(255, 255, 255, 0.6) 6%, #ffb34d 25%, #ff8a00 60%, #ff6a00 100%)
+}
+
+.logoBadge::before {
+	content: "";
+	position: absolute;
+	left: 8px;
+	top: 6px;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.12) 40%);
+	filter: blur(2px);
+	opacity: 0.95;
+	pointer-events: none
+}
+
+.nav {
+	flex: 1
+}
+
+.navList {
+	display: flex;
+	gap: 40px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	justify-content: center
+}
+
+.navLink {
+	color: #cfe7ff;
+	text-decoration: none;
+	font-weight: 600;
+	padding: 10px 6px;
+	font-size: 15px
+}
+
+.navLink:hover {
+	color: #ffffff
+}
+
+/* glow behind nav items on hover (matches character hover style) */
+.navLink {
+	position: relative;
+	z-index: 2;
+	overflow: visible;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center
+}
+
+.navLink::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	z-index: 1;
+	pointer-events: none;
+	/* use the warm radial gradient but keep it centered */
+	background: radial-gradient(circle at 50% 50%, rgba(255, 190, 100, 0.98) 0%, rgba(255, 120, 20, 0.35) 12%, rgba(0, 0, 0, 0) 65%);
+	filter: blur(18px) saturate(120%);
+	mix-blend-mode: screen;
+	opacity: 0;
+	transform-origin: center center;
+	transition: transform 260ms cubic-bezier(.2, .8, .2, 1), opacity 260ms ease;
+}
+
+.navLink:hover::after {
+	transform: translate(-50%, -50%) scale(1);
+	opacity: 1;
+}
+
+.controls {
+	display: flex;
+	align-items: center;
+	gap: 14px
+}
+
+.powerBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	background: rgba(255, 255, 255, 0.02);
+	border: 1px solid rgba(100, 170, 220, 0.08);
+	padding: 8px 14px;
+	border-radius: 32px;
+	color: #cfe7ff;
+	font-weight: 700
+}
+
+.cameraIcon {
+	background: rgba(255, 255, 255, 0.03);
+	padding: 6px;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.03)
+}
+
+.powerText {
+	margin-left: 4px
+}
+
+.toggle {
+	width: 44px;
+	height: 24px;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	padding: 3px;
+	border: 1px solid rgba(255, 255, 255, 0.03)
+}
+
+.toggleKnob {
+	width: 18px;
+	height: 18px;
+	background: linear-gradient(180deg, #9be7ff, #64d2ff);
+	border-radius: 50%;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+	transform: translateX(0)
+}
+
+.iconBtn {
+	background: transparent;
+	border: none;
+	color: #cfe7ff;
+	font-size: 18px;
+	padding: 8px;
+	border-radius: 8px
+}
+
+/* small visual tweak for the toggle 'off' state */
+.powerBtn[aria-pressed="false"] .toggleKnob {
+	transform: translateX(-6px);
+	opacity: 0.95
+}
+
+.powerBtn[aria-pressed="true"] .toggleKnob {
+	transform: translateX(6px);
+	opacity: 1
+}
+
+.brand {
+	font-size: 20px;
+	letter-spacing: 1px;
+	color: #e8f7ff;
+}
+
+@media (max-width:720px) {
+	.inner {
+		padding: 8px
+	}
+
+	.navList {
+		gap: 12px
+	}
+
+	/* reduce glow size on small screens to keep it visually centered */
+	.navLink::after {
+		width: 88px;
+		height: 88px;
+		filter: blur(14px) saturate(120%)
+	}
+}
