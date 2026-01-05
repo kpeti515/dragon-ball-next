@@ -1,31 +1,24 @@
 import Image from 'next/image'
-
-async function fetchCharacter(id: string) {
-  const url = `https://dragonball-api.com/api/characters/${id}`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error('Failed to fetch character')
-  return res.json()
-}
+import { fetchCharacter } from '../../lib/db-api-calls/fetchCharacter'
+import { notFound } from 'next/navigation'
+import styles from './page.module.css'
 
 export default async function CharacterPage({ params }: PageProps<'/characters/[id]'>)  {
-  const {id} = await params
-  let character: any = null
-  try {
-    character = await fetchCharacter(id)
-  } catch (err) {
-    console.error(err)
+  const { id } = await params
+  const character = await fetchCharacter(id)
+
+  if (!character) {
+    notFound()
   }
 
-  if (!character) return <main style={{padding:24,color:'#fff'}}>Character not found</main>
-
   return (
-    <main style={{padding:24}}>
-      <h1 style={{color:'#fff'}}>{character.name}</h1>
-      <div style={{display:'flex',gap:24,alignItems:'flex-start'}}>
+    <main className={styles.root}>
+      <h1>{character.name}</h1>
+      <div className={styles.container}>
         {character.image && (
-          <Image src={character.image} alt={character.name} width={320} height={320} style={{objectFit:'contain'}} />
+          <Image src={character.image} alt={character.name} width={320} height={320} className={styles.image} />
         )}
-        <div style={{color:'#cfe7ff'}}>
+        <div className={styles.meta}>
           <p><strong>Race:</strong> {character.race}</p>
           <p><strong>Affiliation:</strong> {character.affiliation}</p>
           <p><strong>Ki:</strong> {character.ki}</p>

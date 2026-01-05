@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    mcpServer: true
+  },
   images: {
     remotePatterns: [
       {

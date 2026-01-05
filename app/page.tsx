@@ -1,26 +1,16 @@
 import styles from './page.module.css';
-import Header from './components/Header';
 import Image from 'next/image';
 import CharacterCard from './components/CharacterCard';
-
-async function fetchCharacters(limit = 100) {
-  const url = `https://dragonball-api.com/api/characters?limit=${limit}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch characters: ${res.status}`);
-  }
-  const data = await res.json();
-  return data.items ?? [];
-}
+import { fetchCharacters } from './lib/db-api-calls/fetchCharacters';
+import { notFound } from 'next/navigation';
 
 export default async function Home() {
-  let items = [];
-  try {
-    items = await fetchCharacters(100);
-  } catch (err) {
-    console.error('Error fetching characters:', err);
-    items = [];
-  }
+
+    const characters = await fetchCharacters({fetchAll:true});
+
+    if (!characters || !characters.length) {
+      notFound()
+    }
 
   return (
     <main style={{minHeight:'100vh',paddingBottom:48}}>
@@ -35,7 +25,7 @@ export default async function Home() {
             </div>
 
             <ul className={styles.stats} aria-label="Highlights">
-              <li className={styles.stat}><strong>Total Fighters:</strong> {items.length}</li>
+              <li className={styles.stat}><strong>Total Fighters:</strong> {characters.length}</li>
               <li className={styles.stat}><strong>Unique Sagas:</strong> 12</li>
               <li className={styles.stat}><strong>Transformations:</strong> 80+</li>
             </ul>
@@ -49,7 +39,7 @@ export default async function Home() {
         <section className={styles.roster} id="roster" aria-labelledby="roster-heading">
           <h2 id="roster-heading" style={{color:'#fff'}}>Roster</h2>
           <ul className={styles.grid} role="list">
-            {items.map((c: any) => (
+            {characters.map((c: any) => (
               <li key={c.id} role="listitem">
                 <CharacterCard character={c} />
               </li>

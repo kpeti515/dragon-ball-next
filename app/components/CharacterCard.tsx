@@ -2,15 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './CharacterCard.module.css';
 import type { FC } from 'react';
-
-type Character = {
-  id: string | number;
-  name: string;
-  image?: string | null;
-  race?: string | null;
-  affiliation?: string | null;
-  ki?: string | number | null;
-};
+import { Character } from '../lib/db-api-calls/fetchCharacters';
 
 const CharacterCard: FC<{ character: Character }> = ({ character }) => {
   return (
@@ -21,24 +13,23 @@ const CharacterCard: FC<{ character: Character }> = ({ character }) => {
             <Image
               src={character.image}
               alt={character.name}
-            width={180}
-            height={180}
+              width={180}
+              height={180}
               style={{ objectFit: 'contain', objectPosition: 'center' }}
             />
           ) : (
             <div className={styles.cardPlaceholder}>No image</div>
           )}
-          <div className={styles.powerBanner}>{character.ki ?? 'N/A'}</div>
+          <div className={styles.powerBanner}>{character.maxKi ?? character.ki ?? 'N/A'}</div>
         </div>
       </Link>
 
       <h3 className={styles.cardTitle}>{character.name}</h3>
-      <div className={styles.subtitle}>{character.race ?? character.affiliation ?? ''}</div>
-      { (character.race || character.affiliation) && (
-        <div style={{marginTop:10}}>
-          <div className={styles.tag}>{character.race ?? character.affiliation}</div>
-        </div>
-      )}
+      { character.race && <div className={styles.tag}>Race: {character.race }</div>}
+      { character.affiliation && <div className={styles.tag}>Affiliation: {character.affiliation}</div> }
+      { character.ki && <div className={styles.tag}>BaseKi: {character.ki}</div> }
+      { character.maxKi && <div className={styles.tag}>MaxKi: {character.maxKi}</div> }
+      { character.gender && <div className={styles.tag}>Gender: {character.gender}</div> }
     </div>
   );
 };

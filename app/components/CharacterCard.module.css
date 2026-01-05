@@ -50,7 +50,5 @@
 	font-weight:700;z-index:3;box-shadow:0 6px 18px rgba(18,147,232,0.18);
 }
 
-.subtitle{color:#cfeeff;font-size:13px;margin:6px 0}
-
 .tagRow{display:flex;gap:8px;margin-top:10px}
 .tag{background:rgba(0,0,0,0.45);padding:6px 10px;border-radius:8px;color:#cbdfe9;font-size:13px}
