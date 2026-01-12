@@ -1,5 +1,6 @@
 import CharacterCard from '../../components/CharacterCard'
 import styles from '../../page.module.css'
+import { fetchCharacters } from '../../lib/db-api-calls/fetchCharacters'
 
 async function fetchByRace(race: string) {
   const url = `https://dragonball-api.com/api/characters?race=${encodeURIComponent(race)}`
@@ -8,12 +9,23 @@ async function fetchByRace(race: string) {
   return res.json()
 }
 
-export default async function RacePage({ params }: { params: { race: string } }) {
-  const data: any = await fetchByRace(params.race)
+export async function generateStaticParams() {
+  try {
+    const all = await fetchCharacters({ fetchAll: true })
+    const races = Array.from(new Set(all.map((c) => c.race).filter(Boolean))) as string[]
+    return races.map((race) => ({ race }))
+  } catch (e) {
+    return []
+  }
+}
+
+export default async function RacePage({ params }: { params: Promise<{ race: string }> }) {
+  const { race } = await params
+  const data: any = await fetchByRace(race)
   const items = data ?? []
   return (
     <main style={{padding:24}}>
-      <h1 style={{color:'#fff'}}>Race: {params.race}</h1>
+      <h1 style={{color:'#fff'}}>Race: {race}</h1>
       <ul className={styles.grid} role="list">
         {items.map((c: any) => (
           <li key={c.id} role="listitem">

@@ -15,7 +15,7 @@ export default function Header(){
             <li><Link href="/characters" className={styles.navLink}>Characters</Link></li>
             <li><Link href="/sagas" className={styles.navLink}>Sagas</Link></li>
             <li><Link href="/transformations" className={styles.navLink}>Transformations</Link></li>
-            <li><Link href="/techniques" className={styles.navLink}>Techniques</Link></li>
+            <li><Link href="/races" className={styles.navLink}>Races</Link></li>
           </ul>
         </nav>
 

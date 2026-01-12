@@ -2,6 +2,16 @@ import Image from 'next/image'
 import { fetchCharacter } from '../../lib/db-api-calls/fetchCharacter'
 import { notFound } from 'next/navigation'
 import styles from './page.module.css'
+import { fetchCharacters } from '../../lib/db-api-calls/fetchCharacters';
+
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  const characters = await fetchCharacters({fetchAll:true});
+  return characters.map((character) => ({
+    id: character.id.toString(),
+  }))
+}
 
 export default async function CharacterPage({ params }: PageProps<'/characters/[id]'>)  {
   const { id } = await params
