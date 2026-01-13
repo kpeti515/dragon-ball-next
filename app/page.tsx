@@ -32,7 +32,7 @@ export default async function Home() {
           </div>
 
           <div className={styles.heroImage} aria-hidden="true">
-            <Image src="/images/hero-goku.png" alt="Goku aura" width={360} height={360} />
+            <Image src="images/hero-goku.png" alt="Goku aura" width={360} height={360} />
           </div>
         </section>
 

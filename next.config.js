@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   output: 'export',
   // Set basePath from env when deploying to GitHub Pages (e.g. /dragon-ball-next).
